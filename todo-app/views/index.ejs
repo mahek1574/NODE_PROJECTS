@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Todo List</title>
+</head>
+<body style="margin:0; font-family:Arial; background:#f4f6f9;">
+
+<div style="max-width:700px; margin:50px auto; background:#fff; padding:30px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1);">
+  
+  <h1 style="text-align:center;">Todo List</h1>
+
+  <a href="/add"
+  style="display:block; text-align:center; margin:20px 0; padding:10px; background:#007bff; color:#fff; border-radius:5px; text-decoration:none;">
+    Add New Task
+  </a>
+
+  <ul style="list-style:none; padding:0;">
+    <% todos.forEach(todo => { %>
+      <li style="display:flex; justify-content:space-between; align-items:center; padding:15px; margin-bottom:10px; border:1px solid #ddd; border-radius:5px;">
+        
+        <div>
+          <strong><%= todo.title %></strong><br>
+          <small style="color:#666;"><%= todo.category %></small>
+        </div>
+
+        <div>
+          <a href="/edit/<%= todo.id %>"
+          style="margin-right:10px; padding:6px 10px; border:1px solid #007bff; color:#007bff; text-decoration:none; border-radius:5px;">
+            Edit
+          </a>
+
+          <a href="/delete/<%= todo.id %>"
+          style="padding:6px 10px; border:1px solid red; color:red; text-decoration:none; border-radius:5px;">
+            Delete
+          </a>
+        </div>
+
+      </li>
+    <% }) %>
+  </ul>
+
+  <% if (todos.length === 0) { %>
+    <p style="text-align:center; margin-top:20px; color:#999;">
+      No tasks yet. Add one to get started!
+    </p>
+  <% } %>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Task</title>
+</head>
+<body style="margin:0; font-family:Arial; background:#f4f6f9;">
+
+<div style="max-width:500px; margin:50px auto; background:#fff; padding:30px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1);">
+  
+  <h1 style="text-align:center; margin-bottom:20px;">Edit Task</h1>
+
+  <form action="/edit/<%= todo.id %>" method="POST">
+
+    <div style="margin-bottom:15px;">
+      <label>Task Title</label>
+      <input type="text" name="title" value="<%= todo.title %>" required
+      style="width:100%; padding:10px; margin-top:5px; border-radius:5px; border:1px solid #ccc;">
+    </div>
+
+    <div style="margin-bottom:20px;">
+      <label>Category</label>
+      <select name="category"
+      style="width:100%; padding:10px; margin-top:5px; border-radius:5px; border:1px solid #ccc;">
+       <option value="Office" <%= todo.category === "Office" ? "selected" : "" %>>Office</option>
+<option value="Home" <%= todo.category === "Home" ? "selected" : "" %>>Home</option>
+<option value="Urgent" <%= todo.category === "Urgent" ? "selected" : "" %>>Urgent</option>
+      </select>
+    </div>
+
+    <button type="submit"
+    style="width:100%; padding:12px; background:#28a745; color:#fff; border:none; border-radius:5px; cursor:pointer;">
+      Update Task
+    </button>
+  </form>
+
+  <a href="/" style="display:block; text-align:center; margin-top:15px; color:#007bff; text-decoration:none;">
+     Back to List
+  </a>
+
+</div>
+</body>
+</html>
