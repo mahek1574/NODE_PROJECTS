@@ -1,40 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Edit Task</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit task | Elite Tasks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
-<body style="margin:0; font-family:Arial; background:#f4f6f9;">
+<body style="margin: 0; padding: 0; font-family: 'Outfit', sans-serif; background: radial-gradient(circle at bottom left, #1e293b, #0f172a); color: #f1f5f9; min-height: 100vh; display: flex; justify-content: center; align-items: center;">
 
-<div style="max-width:500px; margin:50px auto; background:#fff; padding:30px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1);">
+<div style="width: 100%; max-width: 500px; margin: 20px; background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 40px; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
   
-  <h1 style="text-align:center; margin-bottom:20px;">Edit Task</h1>
+  <header style="text-align: center; margin-bottom: 32px;">
+    <h1 style="font-size: 2rem; font-weight: 700; margin: 0; color: #f8fafc;"> Edit Task</h1>
+    <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 8px;"> Update your task details</p>
+  </header>
 
   <form action="/edit/<%= todo.id %>" method="POST">
-
-    <div style="margin-bottom:15px;">
-      <label>Task Title</label>
+    
+    <div style="margin-bottom: 24px;">
+      <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #94a3b8; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">Task Title</label>
       <input type="text" name="title" value="<%= todo.title %>" required
-      style="width:100%; padding:10px; margin-top:5px; border-radius:5px; border:1px solid #ccc;">
+      style="width: 100%; padding: 14px 16px; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #f1f5f9; font-family: inherit; font-size: 1rem; box-sizing: border-box; outline: none;">
     </div>
 
-    <div style="margin-bottom:20px;">
-      <label>Category</label>
-      <select name="category"
-      style="width:100%; padding:10px; margin-top:5px; border-radius:5px; border:1px solid #ccc;">
-       <option value="Office" <%= todo.category === "Office" ? "selected" : "" %>>Office</option>
-<option value="Home" <%= todo.category === "Home" ? "selected" : "" %>>Home</option>
-<option value="Urgent" <%= todo.category === "Urgent" ? "selected" : "" %>>Urgent</option>
-      </select>
+    <div style="margin-bottom: 32px;">
+      <label style="display: block; font-size: 0.85rem; font-weight: 600; color: #94a3b8; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">Priority Category</label>
+      <div style="position: relative;">
+        <select name="category"
+        style="width: 100%; padding: 14px 16px; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: #f1f5f9; font-family: inherit; font-size: 1rem; box-sizing: border-box; outline: none; appearance: none; cursor: pointer;">
+          <option value="Office" <%= todo.category === "Office" ? "selected" : "" %>>Office</option>
+          <option value="Home" <%= todo.category === "Home" ? "selected" : "" %>>Home</option>
+          <option value="Urgent" <%= todo.category === "Urgent" ? "selected" : "" %>>Urgent</option>
+        </select>
+        <div style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #64748b; font-size: 0.8rem;">▼</div>
+      </div>
     </div>
 
     <button type="submit"
-    style="width:100%; padding:12px; background:#28a745; color:#fff; border:none; border-radius:5px; cursor:pointer;">
-      Update Task
+    style="width: 100%; padding: 16px; background: linear-gradient(135deg, #10b981, #3b82f6); color: #fff; border: none; border-radius: 12px; font-weight: 600; font-size: 1rem; cursor: pointer; box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);">
+      Save Changes
     </button>
   </form>
 
-  <a href="/" style="display:block; text-align:center; margin-top:15px; color:#007bff; text-decoration:none;">
-     Back to List
+  <a href="/" style="display: block; text-align: center; margin-top: 24px; color: #94a3b8; text-decoration: none; font-size: 0.9rem; font-weight: 500;">
+    Go Back
   </a>
 
 </div>
