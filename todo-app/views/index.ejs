@@ -1,71 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Todo List</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Todo App</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
-<body style="margin: 0; padding: 0; font-family: 'Outfit', sans-serif; background: radial-gradient(circle at top left, #1e293b, #0f172a); color: #f1f5f9; min-height: 100vh; display: flex; justify-content: center; align-items: center;">
+<body>
+    <div class="container">
+        <header>
+            <h1>Todo List</h1>
+            <a href="/add" class="btn btn-primary">+ New Task</a>
+        </header>
 
-<div style="width: 100%; max-width: 800px; margin: 40px 20px; background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 40px; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
-  
-  <header style="text-align: center; margin-bottom: 40px;">
-    <h1 style="font-size: 3rem; font-weight: 700; margin: 0; background: linear-gradient(135deg, #60a5fa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px;">Elite Tasks</h1>
-    <p style="color: #94a3b8; margin-top: 8px; font-weight: 300;"> Keep track of your daily tasks</p>
-  </header>
+        <div class="todo-list">
+            <% todos.forEach(todo => { %>
+                <div class="todo-card">
+                    <% if (todo.image) { %>
+                        <img src="/uploads/<%= todo.image %>" class="todo-image" alt="Task image">
+                    <% } else { %>
+                        <div class="todo-image" style="display: flex; align-items: center; justify-content: center; background: #f1f5f9; color: #94a3b8; font-size: 1.5rem;">📋</div>
+                    <% } %>
 
-  <a href="/add"
-  style="display: block; text-align: center; margin-bottom: 32px; padding: 16px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: #fff; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1.1rem; box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3); transition: transform 0.2s ease;">
-    + New Task
-  </a>
+                    <div class="todo-content">
+                        <h3 class="todo-title"><%= todo.title %></h3>
+                        <div class="todo-meta">
+                            <span class="badge badge-<%= todo.category.toLowerCase() %>"><%= todo.category %></span>
+                            <span>• Task ID: #<%= todo.id.slice(-4) %></span>
+                        </div>
+                    </div>
 
-  <div style="display: flex; flex-direction: column; gap: 16px;">
-    <% todos.forEach(todo => { %>
-      <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease;">
-        
-        <div style="flex-grow: 1;">
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px;">
-            <span style="font-size: 1.15rem; font-weight: 600; color: #f8fafc;"><%= todo.title %></span>
-            <% 
-              let badgeColor = "#475569";
-              if(todo.category === "Urgent") badgeColor = "#ef4444";
-              if(todo.category === "Home") badgeColor = "#10b981";
-              if(todo.category === "Office") badgeColor = "#3b82f6";
-            %>
-            <span style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; padding: 4px 10px; background: <%= badgeColor + '22' %>; border: 1px solid <%= badgeColor %>; color: <%= badgeColor %>; border-radius: 9999px; font-weight: 700;">
-              <%= todo.category %>
-            </span>
-          </div>
-          <div style="color: #64748b; font-size: 0.85rem; font-weight: 300;">Last updated: <%= new Date().toLocaleDateString() %></div>
+                    <div class="todo-actions">
+                        <a href="/edit/<%= todo.id %>" class="btn btn-outline" title="Edit">Edit</a>
+                        <a href="/delete/<%= todo.id %>" class="btn btn-danger" title="Delete" onclick="return confirm('Are you sure?')">Delete</a>
+                    </div>
+                </div>
+            <% }) %>
+
+            <% if (todos.length === 0) { %>
+                <div class="empty-state">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">✨</div>
+                    <p>No tasks available. Start by adding a new one!</p>
+                </div>
+            <% } %>
         </div>
-
-        <div style="display: flex; gap: 10px;">
-          <a href="/edit/<%= todo.id %>"
-          style="padding: 8px 16px; background: rgba(255, 255, 255, 0.05); color: #cbd5e1; text-decoration: none; border-radius: 8px; font-size: 0.9rem; font-weight: 500; border: 1px solid rgba(255, 255, 255, 0.1);">
-            Edit
-          </a>
-
-          <a href="/delete/<%= todo.id %>"
-          style="padding: 8px 16px; background: rgba(239, 68, 68, 0.1); color: #f87171; text-decoration: none; border-radius: 8px; font-size: 0.9rem; font-weight: 500; border: 1px solid rgba(239, 68, 68, 0.2);">
-            Delete
-          </a>
-        </div>
-
-      </div>
-    <% }) %>
-  </div>
-
-  <% if (todos.length === 0) { %>
-    <div style="text-align: center; padding: 60px 20px; border: 2px dashed rgba(255, 255, 255, 0.1); border-radius: 16px;">
-      <div style="font-size: 3rem; margin-bottom: 16px;">✨</div>
-      <h3 style="margin: 0; color: #94a3b8; font-weight: 400;">Your workspace is clear</h3>
-      <p style="color: #64748b; font-size: 0.9rem; margin-top: 8px;">Enjoy the productivity of a clean slate.</p>
     </div>
-  <% } %>
-
-</div>
 </body>
 </html>
