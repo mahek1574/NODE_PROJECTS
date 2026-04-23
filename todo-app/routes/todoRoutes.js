@@ -17,7 +17,7 @@ router.get("/edit/:id", todoController.editForm);
 router.post(
   "/edit/:id",
   todoController.upload.single("image"),
-  todoController.updateTodo,
+  todoController.updateTodo
 );
 
 module.exports = router;
