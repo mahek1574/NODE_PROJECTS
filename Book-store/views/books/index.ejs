@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Books - BookVerse</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="navbar-brand">
+       BookVerse
+    </a>
+    <div class="navbar-links">
+      <a href="/add-book" class="btn btn-primary"> Add Book</a>
+      <a href="/logout" class="btn btn-outline">Logout</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="page-header">
+      <h1 class="page-title">All Books</h1>
+      
+    
+      <form action="/books" method="GET" class="search-container">
+        <input type="text" name="search" class="form-control" placeholder="Search book title...">
+        <button type="submit" class="btn btn-secondary">Search</button>
+      </form>
+    </div>
+
+  
+    <div class="categories-wrapper">
+      <span class="categories-label">Filters:</span>
+      <a href="/books" class="category-pill">All</a>
+      <a href="/books?category=Fiction" class="category-pill">Fiction</a>
+      <a href="/books?category=Non-Fiction" class="category-pill">Non-Fiction</a>
+      <a href="/books?category=Mystery" class="category-pill">Mystery</a>
+      <a href="/books?category=Fantasy" class="category-pill">Fantasy</a>
+      <a href="/books?category=Sci-Fi" class="category-pill">Sci-Fi</a>
+    </div>
+
+    
+    <div class="books-grid">
+      <% if (books.length === 0) { %>
+        <div class="empty-state">
+          <div class="empty-icon">📚</div>
+          <h3>No books found</h3>
+          <p>We couldn't find any books matching your criteria.</p>
+          <a href="/add-book" class="btn btn-primary">Add Your First Book</a>
+        </div>
+      <% } else { %>
+        <% books.forEach(book => { %>
+          <div class="book-card">
+            <div class="book-poster-container">
+              <% if(book.image) { %>
+                <img src="/uploads/<%= book.image %>" class="book-poster" alt="<%= book.title %>">
+              <% } else { %>
+                <div class="book-poster-placeholder">📚</div>
+              <% } %>
+              <div class="book-rating-badge">
+                ★ <%= book.rating || '0.0' %>
+              </div>
+              <div class="book-category-chip">
+                <%= book.category || 'Uncategorized' %>
+              </div>
+            </div>
+
+            <div class="book-content">
+              <h3 class="book-title" title="<%= book.title %>"><%= book.title %></h3>
+              
+              <div class="book-meta">
+                <span class="book-year"><%= book.year || 'N/A' %></span>
+                <span class="book-author">By Author</span>
+              </div>
+              
+              <p class="book-desc"><%= book.description || 'No description available for this masterpiece.' %></p>
+
+              <div class="book-actions">
+                <a href="/edit/<%= book._id %>" class="btn btn-edit">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                  Edit
+                </a>
+                <a href="/delete/<%= book._id %>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this book?');">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                  Delete
+                </a>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      <% } %>
+    </div>
+  </div>
+
+</body>
+</html>
