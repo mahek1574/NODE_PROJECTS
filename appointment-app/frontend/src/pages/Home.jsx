@@ -57,7 +57,7 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Features Section */}
+    
             <section className="features section-padding container">
                 <div className="flex justify-between gap-8">
                     <div className="card flex-col items-center text-center" style={{ padding: '2rem', flex: 1 }}>

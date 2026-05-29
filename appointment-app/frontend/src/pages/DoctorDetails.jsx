@@ -12,7 +12,7 @@ const DoctorDetails = () => {
     const [doctor, setDoctor] = useState(null);
     const [loading, setLoading] = useState(true);
     
-    // Booking Form State
+    
     const [bookingData, setBookingData] = useState({
         date: '',
         time: '',

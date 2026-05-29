@@ -10,6 +10,7 @@ import DoctorDetails from './pages/DoctorDetails';
 import MyAppointments from './pages/MyAppointments';
 import AdminDashboard from './pages/AdminDashboard';
 import AddDoctor from './pages/AddDoctor';
+import EditDoctor from './pages/EditDoctor';
 import DoctorDashboard from './pages/DoctorDashboard';
 import { Link } from "react-router-dom";
 
@@ -70,6 +71,11 @@ function App() {
                             <Route path="/admin/add-doctor" element={
                                 <ProtectedRoute adminOnly={true}>
                                     <AddDoctor />
+                                </ProtectedRoute>
+                            } />
+                            <Route path="/admin/edit-doctor/:id" element={
+                                <ProtectedRoute adminOnly={true}>
+                                    <EditDoctor />
                                 </ProtectedRoute>
                             } />
                             <Route path="/admin/manage-doctors" element={

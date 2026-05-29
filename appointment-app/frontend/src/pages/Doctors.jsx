@@ -1,16 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Search, Filter, Star, Clock, MapPin } from 'lucide-react';
+import { Search, Filter, Star, Clock, MapPin, Edit, Trash2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useAuth } from '../context/AuthContext';
 
 const Doctors = () => {
+    const { user } = useAuth();
     const [doctors, setDoctors] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [specialty, setSpecialty] = useState('All');
     const [loading, setLoading] = useState(true);
 
     const specialties = ['All', 'General Physician', 'Cardiologist', 'Dermatologist', 'Pediatrician', 'Neurologist', 'Orthopedic'];
+
+    const handleDelete = async (id, name) => {
+        if (window.confirm(`Are you sure you want to delete Dr. ${name}?`)) {
+            try {
+                await axios.delete(`/doctors/${id}`);
+                alert('Doctor deleted successfully');
+                fetchDoctors();
+            } catch (error) {
+                alert(error.response?.data?.message || 'Error deleting doctor');
+            }
+        }
+    };
 
     useEffect(() => {
         fetchDoctors();
@@ -42,13 +56,13 @@ const Doctors = () => {
             </div>
 
         
-            <div className="card flex items-center justify-between" style={{ padding: '1rem 2rem', marginBottom: '3rem', flexWrap: 'wrap', gap: '1.5rem' }}>
+            <div className="card flex items-center justify-between" style={{ padding: '0.9rem 1.1rem', marginBottom: '3rem', flexWrap: 'wrap', gap: '1.5rem' }}>
                 <div style={{ position: 'relative', flex: 1, minWidth: '250px' }}>
-                    <Search size={20} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                    <Search size={20} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                     <input 
                         type="text" 
+                        className="search-input"
                         placeholder="Search by doctor or specialty..." 
-                        style={{ paddingLeft: '44px', width: '100%', border: '1px solid #E2E8F0' }}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -57,7 +71,7 @@ const Doctors = () => {
                 <div className="flex items-center gap-4" style={{ minWidth: '300px' }}>
                     <Filter size={20} style={{ color: 'var(--text-muted)' }} />
                     <select 
-                        style={{ border: '1px solid #E2E8F0', padding: '10px 16px', borderRadius: '8px', width: '100%' }}
+                        className="filter-select"
                         value={specialty}
                         onChange={(e) => setSpecialty(e.target.value)}
                     >
@@ -97,9 +111,22 @@ const Doctors = () => {
                                 </div>
                                 <div style={{ borderTop: '1px solid var(--border-color)', margin: '1rem 0', paddingTop: '1rem' }} className="flex justify-between items-center">
                                     <span style={{ fontWeight: 700, fontSize: '1.1rem' }}>${doctor.fees}</span>
-                                    <Link to={`/doctors/${doctor._id}`} className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.875rem' }}>
-                                        View Profile
-                                    </Link>
+                                    <div className="flex gap-2">
+                                        {user?.role === 'admin' ? (
+                                            <>
+                                                <Link to={`/admin/edit-doctor/${doctor._id}`} className="btn btn-outline" style={{ padding: '8px 12px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                                    <Edit size={14} /> Edit
+                                                </Link>
+                                                <button onClick={() => handleDelete(doctor._id, doctor.name)} className="btn btn-outline" style={{ padding: '8px 12px', color: '#EF4444', borderColor: '#EF4444', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                                    <Trash2 size={14} /> Delete
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <Link to={`/doctors/${doctor._id}`} className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.875rem' }}>
+                                                View Profile
+                                            </Link>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>

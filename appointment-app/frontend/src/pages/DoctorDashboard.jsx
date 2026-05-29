@@ -3,6 +3,8 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 import { Activity, Calendar, CheckCircle, Clock, XCircle, Users, TrendingUp, Info } from 'lucide-react';
 
+const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100%' height='100%' fill='%23F1F5F9'/><circle cx='50' cy='38' r='20' fill='%23CBD5E1'/><path d='M15 85 C 15 65, 85 65, 85 85' fill='%23CBD5E1'/></svg>";
+
 const DoctorDashboard = () => {
     const [appointments, setAppointments] = useState([]);
     const [stats, setStats] = useState({
@@ -137,9 +139,10 @@ const DoctorDashboard = () => {
                                         <td style={{ padding: '15px' }}>
                                             <div className="flex items-center gap-3">
                                                 <img 
-                                                    src={app.userId?.image ? (app.userId.image.startsWith('http') ? app.userId.image : `http://localhost:5000/uploads/${app.userId.image}`) : 'http://localhost:5000/uploads/default-profile.png'} 
+                                                    src={app.userId?.image && app.userId.image !== 'default-profile.png' ? (app.userId.image.startsWith('http') ? app.userId.image : `http://localhost:5000/uploads/${app.userId.image}`) : DEFAULT_AVATAR} 
                                                     alt={app.userId?.name || 'Deleted Patient'} 
                                                     style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }}
+                                                    onError={(e) => { e.target.src = DEFAULT_AVATAR; }}
                                                 />
                                                 <div>
                                                     <div style={{ fontWeight: 600 }}>{app.userId?.name || 'N/A'}</div>
