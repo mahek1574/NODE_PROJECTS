@@ -1,0 +1,34 @@
+<div style="border:1px solid #ddd; padding:12px; margin:10px; border-radius:8px;">
+
+  <h3><%= task.title %></h3>
+
+  <p><%= task.description %></p>
+
+  <p>Status: <%= task.status %></p>
+
+  <% if (task.category) { %>
+    <p>Category: <%= task.category.name %></p>
+  <% } %>
+
+  <% if (task.owner) { %>
+    <p>Owner: <%= task.owner.username %></p>
+  <% } %>
+
+  <div style="margin-top:10px; display:flex; gap:10px;">
+
+    <form method="POST" action="/tasks/delete/<%= task._id %>">
+      <button style="background:red; color:white; border:none; padding:6px 10px; border-radius:5px;">
+        Delete
+      </button>
+    </form>
+
+    <form method="POST" action="/tasks/update/<%= task._id %>">
+      <input type="hidden" name="status" value="Completed" />
+      <button style="background:green; color:white; border:none; padding:6px 10px; border-radius:5px;">
+        Complete
+      </button>
+    </form>
+
+  </div>
+
+</div>

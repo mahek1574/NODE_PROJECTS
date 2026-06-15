@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tasks</title>
+</head>
+<body>
+
+<%- include("partials/navbar", { user: user }) %>
+
+<h2>Task List</h2>
+
+<form method="POST" action="/tasks">
+  <input type="text" name="title" placeholder="Task Title" required />
+  <input type="text" name="description" placeholder="Description" />
+  <button type="submit">Add Task</button>
+</form>
+
+<hr>
+
+<% tasks.forEach(task => { %>
+
+  <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+
+    <h3><%= task.title %></h3>
+    <p><%= task.description %></p>
+    <p>Status: <%= task.status %></p>
+
+    <form method="POST" action="/tasks/delete/<%= task._id %>">
+      <button>Delete</button>
+    </form>
+
+  </div>
+
+<% }) %>
+
+</body>
+</html>

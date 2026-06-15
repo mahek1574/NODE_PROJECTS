@@ -1,0 +1,11 @@
+<nav style="padding:10px; border-bottom:1px solid #ccc;">
+
+  <a href="/tasks">My Tasks</a>
+
+  <% if (user && user.role === "admin") { %>
+    | <a href="/tasks">All Tasks</a>
+  <% } %>
+
+  | <a href="/logout">Logout</a>
+
+</nav>
