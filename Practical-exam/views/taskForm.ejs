@@ -1,19 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Create Task</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Task - TaskSphere</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
 <%- include("partials/navbar", { user: user }) %>
 
-<h2>Create Task</h2>
+<main class="dashboard-container">
+  <div class="auth-card" style="margin: 40px auto; max-width: 600px;">
+    <div class="auth-header">
+      <h1>Create Task</h1>
+      <p>Add a new item to your todo list</p>
+    </div>
 
-<form method="POST" action="/tasks">
-  <input type="text" name="title" placeholder="Title" required />
-  <input type="text" name="description" placeholder="Description" />
-  <button type="submit">Create</button>
-</form>
+    <form class="auth-form" method="POST" action="/tasks">
+      <div class="form-group">
+        <label for="task-title">Title</label>
+        <input type="text" id="task-title" name="title" placeholder="Task Title" required />
+      </div>
+
+      <div class="form-group">
+        <label for="task-description">Description</label>
+        <textarea id="task-description" name="description" placeholder="Task Description" rows="4"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">Create Task</button>
+    </form>
+  </div>
+</main>
 
 </body>
 </html>

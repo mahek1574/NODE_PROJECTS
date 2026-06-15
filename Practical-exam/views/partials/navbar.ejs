@@ -1,11 +1,14 @@
-<nav style="padding:10px; border-bottom:1px solid #ccc;">
-
-  <a href="/tasks">My Tasks</a>
-
-  <% if (user && user.role === "admin") { %>
-    | <a href="/tasks">All Tasks</a>
-  <% } %>
-
-  | <a href="/logout">Logout</a>
-
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-brand">
+      <span class="brand-text">TaskSphere</span>
+      <% if (user) { %>
+        <span class="user-badge <%= user.role %>"><%= user.role.toUpperCase() %></span>
+      <% } %>
+    </div>
+    <div class="nav-links">
+      <a href="/tasks" class="nav-link">My Tasks</a>
+      <a href="/logout" class="nav-link nav-logout">Logout</a>
+    </div>
+  </div>
 </nav>

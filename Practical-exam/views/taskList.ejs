@@ -1,37 +1,105 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Tasks</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - TaskSphere</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
 <%- include("partials/navbar", { user: user }) %>
 
-<h2>Task List</h2>
+<main class="dashboard-container">
+  <div class="dashboard-grid">
+    <!-- Sidebar: Forms and Management -->
+    <section class="dashboard-sidebar">
+      <!-- Create Task Card -->
+      <div class="glass-card">
+        <h3>Create New Task</h3>
+        <form class="control-form" method="POST" action="/tasks">
+          <div class="form-group">
+            <label for="task-title">Title</label>
+            <input type="text" id="task-title" name="title" placeholder="What needs to be done?" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="task-desc">Description</label>
+            <textarea id="task-desc" name="description" placeholder="Optional details..." rows="3"></textarea>
+          </div>
 
-<form method="POST" action="/tasks">
-  <input type="text" name="title" placeholder="Task Title" required />
-  <input type="text" name="description" placeholder="Description" />
-  <button type="submit">Add Task</button>
-</form>
+          <div class="form-group">
+            <label for="task-category">Category</label>
+            <select id="task-category" name="category">
+              <option value="">No Category</option>
+              <% categories.forEach(category => { %>
+                <option value="<%= category._id %>"><%= category.name %></option>
+              <% }) %>
+            </select>
+          </div>
 
-<hr>
+          <button type="submit" class="btn btn-primary btn-block">Add Task</button>
+        </form>
+      </div>
 
-<% tasks.forEach(task => { %>
+      <!-- Categories Card -->
+      <div class="glass-card mt-4">
+        <h3>Manage Categories</h3>
+        <form class="control-form" method="POST" action="/category">
+          <div class="form-group">
+            <label for="category-name">New Category Name</label>
+            <div class="input-with-button">
+              <input type="text" id="category-name" name="name" placeholder="Work, Personal, etc." required />
+              <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+          </div>
+        </form>
 
-  <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+        <% if (categories && categories.length > 0) { %>
+          <div class="category-list">
+            <% categories.forEach(category => { %>
+              <div class="category-item">
+                <span><%= category.name %></span>
+                <form method="POST" action="/category/delete/<%= category._id %>" style="margin:0;">
+                  <button type="submit" class="btn-icon-delete" title="Delete Category">
+                    &times;
+                  </button>
+                </form>
+              </div>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <p class="empty-state-text">No categories created yet.</p>
+        <% } %>
+      </div>
+    </section>
 
-    <h3><%= task.title %></h3>
-    <p><%= task.description %></p>
-    <p>Status: <%= task.status %></p>
+    <!-- Main Content: Task Boards -->
+    <section class="dashboard-main">
+      <div class="board-header">
+        <h2>Your Tasks Board</h2>
+        <span class="task-count-badge"><%= tasks.length %> Tasks</span>
+      </div>
 
-    <form method="POST" action="/tasks/delete/<%= task._id %>">
-      <button>Delete</button>
-    </form>
-
+      <% if (tasks && tasks.length > 0) { %>
+        <div class="tasks-grid">
+          <% tasks.forEach(task => { %>
+            <%- include("taskItem", { task: task }) %>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <div class="empty-state glass-card">
+          <div class="empty-icon">📂</div>
+          <h3>No tasks found</h3>
+          <p>Get started by creating a task on the left panel.</p>
+        </div>
+      <% } %>
+    </section>
   </div>
-
-<% }) %>
+</main>
 
 </body>
 </html>

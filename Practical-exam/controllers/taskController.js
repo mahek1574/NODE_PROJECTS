@@ -1,5 +1,6 @@
-const Task = require("../models/Task");
-const User = require("../models/User");
+const Task = require("../models/task");
+const User = require("../models/user");
+const Category = require("../models/category");
 
 exports.getTasks = async (req, res) => {
   let tasks;
@@ -10,7 +11,9 @@ exports.getTasks = async (req, res) => {
     tasks = await Task.find({ owner: req.user.id }).populate("category");
   }
 
-  res.render("taskList", { tasks, user: req.user });
+  const categories = await Category.find();
+
+  res.render("taskList", { tasks, user: req.user, categories });
 };
 
 exports.createTask = async (req, res) => {
