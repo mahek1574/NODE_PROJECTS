@@ -4,7 +4,8 @@ import axios from 'axios';
 const AuthContext = createContext();
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://localhost:5000/api';
+axios.defaults.baseURL =
+  import.meta.env.VITE_API_URL || "https://carepulse-9thk.onrender.com/api";
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
